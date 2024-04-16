@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {
@@ -18,7 +19,7 @@ class PostController extends Controller
    */
     public function __construct()
     {
-      $this->middleware('auth');
+      $this->middleware('auth')->except(['show', 'index']);
     }
     public function index(User $user)
     {
@@ -26,7 +27,7 @@ class PostController extends Controller
         //todo lo guarda en user
     //  dd(auth()->user());
 
-      $posts = Post::where('user_id', $user->id)->paginate(5);
+      $posts = Post::where('user_id', $user->id)->latest()->paginate(8);
      //dd($posts);
 
     return view('dashboard',[
@@ -76,5 +77,32 @@ class PostController extends Controller
                     'user_id'=>auth()->user()->id
         ]);
         return redirect()->route('posts.index', auth()->user()->username);
+
+    }
+    public function show(User $user, Post $post){//show es para mosrtar 
+        return view('posts.show',[
+           "post"=>$post,
+           'user'=>$user
+           
+        ]);
+
+    }
+
+    public function destroy(Post $post)
+    {
+     $this->authorize('delete', $post);//el metodo del policy y le pasas el post de la url 
+    
+     $post->delete();//si pasa la autorizacion elimina el post
+
+
+
+     //eliminar la imagen
+     $imagen_path= public_path('uploads/' . $post->imagen);
+
+     if(File::exists($imagen_path)){//comprobamos si el archivo existe
+        unlink($imagen_path);
+     } 
+     return redirect()->route('posts.index', auth()->user()->username);
+
     }
 }
