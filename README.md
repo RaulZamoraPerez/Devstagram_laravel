@@ -118,137 +118,125 @@ php artisan route:clear; php artisan config:clear; php artisan view:clear; php a
 - Optimizar para producción (config cache, route cache):
 
 ```powershell
+# Devstagram_laravel
+
+Proyecto de ejemplo basado en Laravel que implementa funcionalidades tipo Instagram (posts, comentarios, likes y perfiles).
+
+Este README está escrito en Markdown limpio para buena visualización en GitHub y contiene instrucciones básicas para levantar el proyecto en Windows (PowerShell).
+
+---
+
+## Requisitos mínimos
+
+- PHP 8.1+
+- Composer
+- Node.js 16+ y npm (o Yarn)
+- MySQL / MariaDB (u otra BD soportada por Laravel)
+- Extensiones PHP habituales: mbstring, PDO, BCMath, OpenSSL, Fileinfo, ctype, json
+
+## Inicio rápido (PowerShell)
+
+1. Abrir PowerShell en la carpeta del proyecto:
+
+```powershell
+cd 'C:\Users\Hewlett Packard\Desktop\laravel\Devstagram_laravel'
+```
+
+2. Instalar dependencias PHP y JS:
+
+```powershell
+composer install --no-interaction --prefer-dist
+npm install
+# o: yarn install
+```
+
+3. Copiar el `.env` y generar la clave:
+
+```powershell
+Copy-Item -Path .env.example -Destination .env
+php artisan key:generate
+```
+
+4. Configurar `.env` (DB, MAIL, etc.) y ejecutar migraciones:
+
+```powershell
+php artisan migrate
+php artisan db:seed    # opcional
+```
+
+5. Ejecutar Vite en desarrollo (para assets con HMR):
+
+```powershell
+npm run dev
+```
+
+6. Levantar servidor de desarrollo (también puedes usar `php artisan serve` sin argumentos):
+
+```powershell
+php artisan serve
+# por defecto abre en: http://127.0.0.1:8000
+```
+
+---
+
+## Comandos útiles (resumen)
+
+- Ejecutar tests:
+
+```powershell
+php artisan test
+```
+
+- Limpiar cachés:
+
+```powershell
+php artisan route:clear; php artisan config:clear; php artisan view:clear; php artisan cache:clear
+```
+
+- Optimizar para producción:
+
+```powershell
 php artisan config:cache; php artisan route:cache; php artisan view:cache
 ```
 
-- Composer update/install:
+---
 
-```powershell
-composer install
-composer update
-```
+## Livewire
 
-## Livewire (si está instalado)
+Si el proyecto usa Livewire (revisa `app/Http/Livewire`):
 
-Este proyecto contiene componentes Livewire. Comandos comunes:
-
-- Generar un componente Livewire:
+- Crear componente:
 
 ```powershell
 php artisan make:livewire NombreComponente
 ```
 
-- Si necesitas publicar assets de Livewire (por ejemplo para Alpine/supports):
+- Publicar assets de Livewire (si necesario):
 
 ```powershell
 php artisan livewire:publish --assets
 ```
 
-- Mostrar lista de componentes (no hay comando nativo, pero puedes revisar `resources/views/livewire` y `app/Http/Livewire`)
-
-Notas Livewire:
-- Livewire trabaja con Vite y Alpine.js por defecto en instalaciones recientes. Asegúrate de que `resources/js/app.js` importe `@livewire/livewire` si es necesario.
-- Si tienes problemas de recarga, reinicia `npm run dev` y verifica la consola del navegador.
-
-## Notas específicas del proyecto
-
-- Rutas principales en `routes/web.php`.
-- Controladores principales en `app/Http/Controllers`.
-- Modelos: revisa `app/Models` para `Post`, `User`, `Like`, `Comentario`.
-- Livewire: componentes en `app/Http/Livewire`.
-
-## Depuración y problemas comunes
-
-- Error de migraciones: revisa que las credenciales en `.env` sean correctas y que el usuario tenga permisos.
-- Problemas con permisos de `storage`/`bootstrap/cache`: en Windows normalmente no aplica, pero en Linux/WSL usa `chmod -R 775 storage bootstrap/cache`.
-- Errores de paquetes Node: borra `node_modules` y reinstala (`rm -rf node_modules` / `npm ci`). En PowerShell:
-
-```powershell
-Remove-Item -Recurse -Force node_modules
-npm ci
-```
-
-## Cómo contribuir / desarrollo
-
-- Crea una rama por feature: `git checkout -b feature/mi-cambio`.
-- Ejecuta tests y lint antes de hacer PR.
-
-## Recursos útiles
-
-- Documentación Laravel: https://laravel.com/docs
-- Livewire docs: https://laravel-livewire.com/docs
+Nota: asegúrate de ejecutar `npm run dev` para ver cambios en tiempo real.
 
 ---
 
-Si quieres, puedo añadir instrucciones específicas para despliegue (Forge, Vapor, Docker) o crear scripts de `Makefile`/`tasks.json` para VSCode. Dime cuál prefieres.
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Notas sobre `.env` y artefactos
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- Nunca subas archivos `.env` reales al repositorio. Usa `.env.example` como plantilla.
+- `vendor/`, `node_modules/`, `public/uploads` y `storage/logs` deben estar en `.gitignore` (ya incluidos en este proyecto).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Contribuir
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Crea una rama por feature: `git checkout -b feature/mi-cambio`.
+- Haz PRs desde tu fork o rama y ejecuta los tests antes de pedir revisión.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+Si quieres, puedo:
+- Añadir pasos para despliegue (Docker, Forge, Vapor).
+- Crear un script PowerShell `scripts/setup.ps1` que automatice instalación + migraciones.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-#   P r o y e c t o - d e - l a r a v e l 
- 
- #   D e v s t a g r a m _ l a r a v e l 
- 
- 
+Dime cuál prefieres y lo agrego.
