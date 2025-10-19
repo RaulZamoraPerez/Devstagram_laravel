@@ -17,3 +17,25 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+
+# Node / PHP deps and local envs
+/vendor
+
+# Evitar subir otros archivos .env locales o de testing, pero mantener .env.example
+.env.local
+.env.testing
+.env.*
+!.env.example
+
+# Sistema / caches / editores
+.DS_Store
+Thumbs.db
+.sass-cache
+.cache
+/.vagrant
+
+# Carpetas de uploads y logs que no deberían versionarse
+/public/perfiles
+/public/uploads
+/storage/logs
