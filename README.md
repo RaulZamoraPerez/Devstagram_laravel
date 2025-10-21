@@ -235,8 +235,40 @@ Nota: asegúrate de ejecutar `npm run dev` para ver cambios en tiempo real.
 
 ---
 
-Si quieres, puedo:
-- Añadir pasos para despliegue (Docker, Forge, Vapor).
-- Crear un script PowerShell `scripts/setup.ps1` que automatice instalación + migraciones.
 
-Dime cuál prefieres y lo agrego.
+
+## PROYECTO IMAGENES
+
+![alt text](image.png)
+
+
+## Publicaciones
+![alt text](image-1.png)
+
+
+## Crear publicaciones
+![alt text](image-2.png)
+
+
+## Publicacion
+![alt text](image-3.png)
+![alt text](image-4.png)
+
+
+## Registro
+![alt text](image-5.png)
+
+
+
+## Manejo de sessiones
+![alt text](image-6.png)
+
+
+## Perfil
+![alt text](image-7.png)
+![alt text](image-9.png)
+
+
+## Seguir usuarios
+![alt text](image-8.png)
+
